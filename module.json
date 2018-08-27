@@ -1,0 +1,17 @@
+{
+    "name": "Ibusiness",
+    "alias": "ibusiness",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 1,
+    "providers": [
+        "Modules\\Ibusiness\\Providers\\IbusinessServiceProvider",
+        "Modules\\Ibusiness\\Providers\\RouteServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        
+    ],
+    "requires": []
+}
