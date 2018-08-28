@@ -18,5 +18,6 @@ class Business extends Model
         ->withTimestamps();
 
     }
+
     
 }
