@@ -6,22 +6,23 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li><a href="{{ route('admin.ibusiness.business.index') }}">{{ trans('ibusiness::businesses.title.businesses') }}</a></li>
+        <li><a href="{{ route('admin.ibusiness.userbusiness.index') }}">{{ trans('ibusiness::userbusinesses.title.userbusinesses') }}</a></li>
         <li class="active">{{ trans('ibusiness::userbusinesses.title.edit userbusiness') }}</li>
     </ol>
 @stop
 
 @section('content')
+    {!! Form::open(['route' => ['admin.ibusiness.userbusiness.update', $userbusiness->id], 'method' => 'put']) !!}
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom">
+                @include('partials.form-tab-headers')
                 <div class="tab-content">
-                    
                     <?php $i = 0; ?>
                     @foreach (LaravelLocalization::getSupportedLocales() as $locale => $language)
                         <?php $i++; ?>
                         <div class="tab-pane {{ locale() == $locale ? 'active' : '' }}" id="tab_{{ $i }}">
-                             @include('ibusiness::admin.userbusinesses.partials.edit-fields', ['lang' => $locale])
+                            @include('ibusiness::admin.userbusinesses.partials.edit-fields', ['lang' => $locale])
                         </div>
                     @endforeach
 
@@ -29,11 +30,11 @@
                         <button type="submit" class="btn btn-primary btn-flat">{{ trans('core::core.button.update') }}</button>
                         <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.ibusiness.userbusiness.index')}}"><i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                     </div>
-
                 </div>
-            </div>
+            </div> {{-- end nav-tabs-custom --}}
         </div>
     </div>
+    {!! Form::close() !!}
 @stop
 
 @section('footer')

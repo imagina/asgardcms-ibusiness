@@ -52,6 +52,7 @@ class RegisterIbusinessSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibusiness.businesses.index')
                     );
                 });
+                /*
                 $item->item(trans('ibusiness::userbusinesses.title.userbusinesses'), function (Item $item) {
                     $item->icon('fa fa-users');
                     $item->weight(0);
@@ -79,7 +80,18 @@ class RegisterIbusinessSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibusiness.businessproducts.index')
                     );
                 });
+                $item->item(trans('ibusiness::addresses.title.addresses'), function (Item $item) {
+                    $item->icon('fa fa-copy');
+                    $item->weight(0);
+                    $item->append('admin.ibusiness.address.create');
+                    $item->route('admin.ibusiness.address.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('ibusiness.addresses.index')
+                    );
+                });
+                */
 // append
+
 
 
 

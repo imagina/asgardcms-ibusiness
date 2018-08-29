@@ -17,6 +17,11 @@ $router->group(['prefix' =>'/ibusiness'], function (Router $router) {
         'uses' => 'BusinessController@create',
         'middleware' => 'can:ibusiness.businesses.create'
     ]);
+    $router->get('businesses/branchoffice/create/{business_id}', [
+        'as' => 'admin.ibusiness.business.create.branchoffice',
+        'uses' => 'BusinessController@createBranchOffice',
+        'middleware' => 'can:ibusiness.businesses.create'
+    ]);
     $router->post('businesses', [
         'as' => 'admin.ibusiness.business.store',
         'uses' => 'BusinessController@store',
@@ -38,10 +43,11 @@ $router->group(['prefix' =>'/ibusiness'], function (Router $router) {
         'middleware' => 'can:ibusiness.businesses.destroy'
     ]);
 
-
+    /*
     $router->bind('userbusiness', function ($id) {
         return app('Modules\Ibusiness\Repositories\userbusinessRepository')->find($id);
     });
+    */
     $router->get('userbusinesses', [
         'as' => 'admin.ibusiness.userbusiness.index',
         'uses' => 'userbusinessController@index',
@@ -57,7 +63,7 @@ $router->group(['prefix' =>'/ibusiness'], function (Router $router) {
         'uses' => 'userbusinessController@store',
         'middleware' => 'can:ibusiness.userbusinesses.create'
     ]);
-    $router->get('userbusinesses/{userbusiness}/edit', [
+    $router->get('userbusinesses/{id}/edit', [
         'as' => 'admin.ibusiness.userbusiness.edit',
         'uses' => 'userbusinessController@edit',
         'middleware' => 'can:ibusiness.userbusinesses.edit'
@@ -147,7 +153,41 @@ $router->group(['prefix' =>'/ibusiness'], function (Router $router) {
         'uses' => 'businessproductController@destroy',
         'middleware' => 'can:ibusiness.businessproducts.destroy'
     ]);
+    $router->bind('address', function ($id) {
+        return app('Modules\Ibusiness\Repositories\AddressRepository')->find($id);
+    });
+    $router->get('addresses', [
+        'as' => 'admin.ibusiness.address.index',
+        'uses' => 'AddressController@index',
+        'middleware' => 'can:ibusiness.addresses.index'
+    ]);
+    $router->get('addresses/create', [
+        'as' => 'admin.ibusiness.address.create',
+        'uses' => 'AddressController@create',
+        'middleware' => 'can:ibusiness.addresses.create'
+    ]);
+    $router->post('addresses', [
+        'as' => 'admin.ibusiness.address.store',
+        'uses' => 'AddressController@store',
+        'middleware' => 'can:ibusiness.addresses.create'
+    ]);
+    $router->get('addresses/{address}/edit', [
+        'as' => 'admin.ibusiness.address.edit',
+        'uses' => 'AddressController@edit',
+        'middleware' => 'can:ibusiness.addresses.edit'
+    ]);
+    $router->put('addresses/{address}', [
+        'as' => 'admin.ibusiness.address.update',
+        'uses' => 'AddressController@update',
+        'middleware' => 'can:ibusiness.addresses.edit'
+    ]);
+    $router->delete('addresses/{address}', [
+        'as' => 'admin.ibusiness.address.destroy',
+        'uses' => 'AddressController@destroy',
+        'middleware' => 'can:ibusiness.addresses.destroy'
+    ]);
 // append
+
 
 
 

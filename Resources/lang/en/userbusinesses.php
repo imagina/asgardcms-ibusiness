@@ -11,7 +11,7 @@ return [
         'userbusinesses' => 'Users and Businesses',
         'create userbusiness' => 'Assign users to company',
         //'create userbusiness' => 'Create a userbusiness',
-        'edit userbusiness' => 'Edit a userbusiness',
+        'edit userbusiness' => 'Business Users',
     ],
     'button' => [
         'create userbusiness' => 'Assign users to company',
@@ -19,7 +19,8 @@ return [
     ],
     'table' => [
       'Assign' => 'Assigned to ',
-      'relation'=>'Relation'
+      'relation'=>'Relation',
+      'users' => 'Users',
     ],
     'form' => [
       'companies' => 'Companies',
