@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Business extends Model
 {
-  
+
     protected $table = 'ibusiness__businesses';
-    protected $fillable = ['name','description','parent_id','budget','address_1','country','city','postcode'];
+    protected $fillable = ['name','description','parent_id','budget','options','phone','email','nit','person_firstname','person_lastname'];
 
     public function users()
     {
@@ -18,6 +18,8 @@ class Business extends Model
         ->withTimestamps();
 
     }
+    public function addresses(){
+        return $this->morphToMany('Modules\Ibusiness\Entities\Address', 'ibusiness__addressables');
+    }
 
-    
 }

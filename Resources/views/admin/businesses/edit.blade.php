@@ -2,24 +2,32 @@
 
 @section('content-header')
     <h1>
-        {{ trans('ibusiness::businesses.title.create business') }}
+        {{ trans('ibusiness::businesses.title.edit business') }}
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
         <li><a href="{{ route('admin.ibusiness.business.index') }}">{{ trans('ibusiness::businesses.title.businesses') }}</a></li>
-        <li class="active">{{ trans('ibusiness::businesses.title.create business') }}</li>
+        <li class="active">{{ trans('ibusiness::businesses.title.edit business') }}</li>
     </ol>
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.ibusiness.business.store'], 'method' => 'post']) !!}
+    {!! Form::open(['route' => ['admin.ibusiness.business.update', $business->id], 'method' => 'put']) !!}
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom">
+                @include('partials.form-tab-headers')
                 <div class="tab-content">
-                    @include('ibusiness::admin.businesses.partials.create-fields')
+                    <?php $i = 0; ?>
+                    @foreach (LaravelLocalization::getSupportedLocales() as $locale => $language)
+                        <?php $i++; ?>
+                        <div class="tab-pane {{ locale() == $locale ? 'active' : '' }}" id="tab_{{ $i }}">
+                            @include('ibusiness::admin.businesses.partials.edit-fields', ['lang' => $locale])
+                        </div>
+                    @endforeach
+
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary btn-flat">{{ trans('core::core.button.create') }}</button>
+                        <button type="submit" class="btn btn-primary btn-flat">{{ trans('core::core.button.update') }}</button>
                         <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.ibusiness.business.index')}}"><i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                     </div>
                 </div>
@@ -40,11 +48,8 @@
 @stop
 
 @push('js-stack')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         $( document ).ready(function() {
-          $('#nit').mask('000000000-A');
-          $('#phone').mask('000 0000000');
             $(document).keypressAction({
                 actions: [
                     { key: 'b', route: "<?= route('admin.ibusiness.business.index') ?>" }
@@ -71,8 +76,12 @@
         if(result.length>0){
             //load select of countries
             for(var i=0;i<result.length;i++){
-              $('#country').append('<option value="'+result[i]['iso_2']+'">'+result[i]['name']+'</option>');
-            }
+              if("{{$business->country}}"==result[i]['iso_2'])
+                $('#country').append('<option value="'+result[i]['iso_2']+'" selected>'+result[i]['name']+'</option>');
+              else
+                $('#country').append('<option value="'+result[i]['iso_2']+'">'+result[i]['name']+'</option>');
+            }//for
+            loadCity("{{$business->country}}");
         }//
       },
       error:function(error){
@@ -91,7 +100,10 @@
           if(result.length>0){
               //load select of city
               for(var i=0;i<result.length;i++){
-                $('#city').append('<option value="'+result[i]['iso_2']+'">'+result[i]['name']+'</option>');
+                if("{{$business->city}}"==result[i]['iso_2'])
+                  $('#city').append('<option value="'+result[i]['iso_2']+'" selected>'+result[i]['name']+'</option>');
+                else
+                  $('#city').append('<option value="'+result[i]['iso_2']+'">'+result[i]['name']+'</option>');
               }//for()
           }//result.length>0
         },
