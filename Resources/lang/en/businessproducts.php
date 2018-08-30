@@ -8,12 +8,14 @@ return [
     'title' => [
         'businessproducts' => 'businessproduct',
         'create businessproduct' => 'Create a businessproduct',
-        'edit businessproduct' => 'Edit a businessproduct',
+        'edit businessproduct' => 'Business Products',
     ],
     'button' => [
         'create businessproduct' => 'Create a businessproduct',
     ],
     'table' => [
+        'products' => 'Products',
+        'search product' => 'Search product',
     ],
     'form' => [
     ],

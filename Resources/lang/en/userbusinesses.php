@@ -15,12 +15,19 @@ return [
     ],
     'button' => [
         'create userbusiness' => 'Assign users to company',
-        'asign users' => 'Asign users to company'
+        'asign user' => 'Asign to Business'
     ],
     'table' => [
       'Assign' => 'Assigned to ',
       'relation'=>'Relation',
       'users' => 'Users',
+      'search the user' => 'Search an User',
+    ],
+    'users'=>[
+      'first_name' => 'First Name',
+      'last_name' => 'Last Name',
+      'email' => 'Email',
+      'role' => 'Role',
     ],
     'form' => [
       'companies' => 'Companies',

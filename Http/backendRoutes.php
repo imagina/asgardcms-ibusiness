@@ -27,6 +27,11 @@ $router->group(['prefix' =>'/ibusiness'], function (Router $router) {
         'uses' => 'BusinessController@store',
         'middleware' => 'can:ibusiness.businesses.create'
     ]);
+    $router->post('businesses/createaddress', [
+        'as' => 'admin.ibusiness.business.createaddress',
+        'uses' => 'BusinessController@storeAddress',
+        'middleware' => 'can:ibusiness.businesses.create'
+    ]);//parameters: address:array(),business_id: int
     $router->get('businesses/{business}/edit', [
         'as' => 'admin.ibusiness.business.edit',
         'uses' => 'BusinessController@edit',
@@ -119,10 +124,11 @@ $router->group(['prefix' =>'/ibusiness'], function (Router $router) {
         'middleware' => 'can:ibusiness.orderapprovers.destroy'
     ]);
 
-
+    /*
     $router->bind('businessproduct', function ($id) {
         return app('Modules\Ibusiness\Repositories\businessproductRepository')->find($id);
     });
+    */
     $router->get('businessproducts', [
         'as' => 'admin.ibusiness.businessproduct.index',
         'uses' => 'businessproductController@index',
@@ -138,7 +144,7 @@ $router->group(['prefix' =>'/ibusiness'], function (Router $router) {
         'uses' => 'businessproductController@store',
         'middleware' => 'can:ibusiness.businessproducts.create'
     ]);
-    $router->get('businessproducts/{businessproduct}/edit', [
+    $router->get('businessproducts/{id}/edit', [
         'as' => 'admin.ibusiness.businessproduct.edit',
         'uses' => 'businessproductController@edit',
         'middleware' => 'can:ibusiness.businessproducts.edit'

@@ -1,5 +1,7 @@
 <div class="box-body">
-    <p>
-        Your fields //
-    </p>
+
+    @include('ibusiness::admin.businesses.partials.business-infor')
+
+    @include('ibusiness::admin.businessproducts.partials.products')
+
 </div>

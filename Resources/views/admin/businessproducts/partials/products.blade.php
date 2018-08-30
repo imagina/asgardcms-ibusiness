@@ -3,7 +3,7 @@
         <div class="box-header with-border">
             
             <h3 class="box-title text-uppercase ">
-                <strong>{{trans('ibusiness::userbusinesses.table.users')}}</strong>
+                <strong>{{trans('ibusiness::businessproducts.table.products')}}</strong>
             </h3>
 
             <div class="box-tools pull-right">
@@ -18,11 +18,11 @@
 
             <br>
 
-            @include('ibusiness::admin.userbusinesses.partials.users-add')
+            @include('ibusiness::admin.businessproducts.partials.products-add')
 
             <br><br>
 
-            @include('ibusiness::admin.userbusinesses.partials.users-table')
+            @include('ibusiness::admin.businessproducts.partials.products-table')
 
         </div>
 

@@ -52,7 +52,7 @@
                                     <div class="btn-group">
                                         <a href="{{ route('admin.ibusiness.business.edit', [$business->id]) }}" class="btn btn-default btn-flat" title="{{trans('ibusiness::businesses.table.index.business')}}"><i class="fa fa-pencil"></i></a>
                                         <a href="{{ route('admin.ibusiness.userbusiness.edit', [$business->id]) }}" class="btn btn-default btn-flat btn-success" title="{{trans('ibusiness::businesses.table.index.users')}}"><i class="fa fa-users fa-inverse"></i></a>
-                                        <a href="{{ route('admin.ibusiness.business.edit', [$business->id]) }}" class="btn btn-default btn-flat btn-warning" title="{{trans('ibusiness::businesses.table.index.products')}}"><i class="fa fa-object-group fa-inverse"></i></a>
+                                        <a href="{{ route('admin.ibusiness.businessproduct.edit', [$business->id]) }}" class="btn btn-default btn-flat btn-warning" title="{{trans('ibusiness::businesses.table.index.products')}}"><i class="fa fa-object-group fa-inverse"></i></a>
                                         <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.ibusiness.business.destroy', [$business->id]) }}"><i class="fa fa-trash"></i></button>
                                     </div>
                                 </td>
