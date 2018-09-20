@@ -18,6 +18,7 @@ return [
     'form' => [
     ],
     'messages' => [
+      'order status approver success'=>'State of order by approver successfully updated'
     ],
     'validation' => [
     ],

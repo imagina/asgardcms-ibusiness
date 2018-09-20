@@ -14,7 +14,7 @@ class AddColumnBudgetTableBusinesses extends Migration
     public function up()
     {
       Schema::table('ibusiness__businesses', function (Blueprint $table) {
-          $table->float('budget')->default(0);
+          $table->float('budget', 50, 2);
       });
     }
 

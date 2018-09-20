@@ -20,7 +20,7 @@ class CreateIbusinessbusinessproductsTable extends Migration
             $table->foreign('product_id')->references('id')->on('icommerce__products')->onDelete('restrict');
 
             $table->integer('business_id')->unsigned();
-            $table->foreign('business_id')->references('id')->on('ibusiness__userbusinesses')->onDelete('restrict');
+            $table->foreign('business_id')->references('id')->on('ibusiness__businesses')->onDelete('restrict');
 
             $table->float('price', 30, 2);
             

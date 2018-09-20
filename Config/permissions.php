@@ -17,7 +17,7 @@ return [
         'index' => 'ibusiness::orderapprovers.list resource',
         'create' => 'ibusiness::orderapprovers.create resource',
         'edit' => 'ibusiness::orderapprovers.edit resource',
-        'destroy' => 'ibusiness::orderapprovers.destroy resource',
+        'destroy' => 'ibusiness::orderapprovers.destroy resource'
     ],
     'ibusiness.businessproducts' => [
         'index' => 'ibusiness::businessproducts.list resource',
@@ -25,7 +25,21 @@ return [
         'edit' => 'ibusiness::businessproducts.edit resource',
         'destroy' => 'ibusiness::businessproducts.destroy resource',
     ],
+    'ibusiness.addresses' => [
+        'index' => 'ibusiness::addresses.list resource',
+        'create' => 'ibusiness::addresses.create resource',
+        'edit' => 'ibusiness::addresses.edit resource',
+        'destroy' => 'ibusiness::addresses.destroy resource',
+    ],
+    'ibusiness.orders.permissions'=>[
+      'index' => 'ibusiness::businesses.permissions.list preorders',
+      'create' => 'ibusiness::businesses.permissions.create preorders',
+      'update' => 'ibusiness::businesses.permissions.update order approver',
+      'edit'=>'ibusiness::businesses.permissions.edit preorder'
+
+    ],
 // append
+
 
 
 

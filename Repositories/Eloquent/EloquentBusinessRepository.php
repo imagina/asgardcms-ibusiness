@@ -15,4 +15,9 @@ class EloquentBusinessRepository extends EloquentBaseRepository implements Busin
   public function branchOffice($business_id){
     return $this->model->where('parent_id',$business_id)->get();
   }
+
+  public function getById($id){
+    return $this->model->where('id',$id)->first();
+  }
+
 }

@@ -15,8 +15,8 @@ class CreateIbusinessuserbusinessesTable extends Migration
         Schema::create('ibusiness__userbusinesses', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('businesses_id')->unsigned();
-            $table->foreign('businesses_id')->references('id')->on('ibusiness__businesses');
+            $table->integer('business_id')->unsigned();
+            $table->foreign('business_id')->references('id')->on('ibusiness__businesses');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
