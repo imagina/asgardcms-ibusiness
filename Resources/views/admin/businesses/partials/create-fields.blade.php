@@ -146,7 +146,7 @@
       @endif
     </div>
     <hr>
-    
+
     <div class="text-uppercase" style="font-weight:bold;">
       <input type="checkbox" onclick="showShippingForm()" name="addressShipping" id="addressShipping" > {{trans('ibusiness::businesses.form.address_shipping_same_billing')}}
     </div>

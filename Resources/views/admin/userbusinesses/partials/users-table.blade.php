@@ -11,9 +11,9 @@
             </tr>
             </thead>
             <tbody>
-                
+
             @foreach ($business->users as $user)
-                
+
                 <tr>
                     <td>{{$user->id}}</td>
                     <td>{{$user->first_name}}</td>
@@ -24,7 +24,7 @@
                                 {{$role->name}}
                         @endforeach
                     </td>
-                        
+
                     <td>
                         <div class="btn-group">
                             <button title="{{trans('ibusiness::userbusinesses.table.unlink')}}" class="btn btn-sm btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.ibusiness.userbusiness.destroy', [$business->id,$user->id]) }}">
@@ -34,7 +34,7 @@
                     </td>
 
                 </tr>
-                
+
             @endforeach
 
             </tbody>
@@ -60,7 +60,7 @@
 
 <script type="text/javascript">
 
-    $(function(){ 
+    $(function(){
 
         $('.data-table').dataTable({
                 "paginate": true,
@@ -74,7 +74,7 @@
                     "url": '<?php echo Module::asset("core:js/vendor/datatables/{$locale}.json") ?>'
                 }
         });
-       
+
     });
 
 </script>

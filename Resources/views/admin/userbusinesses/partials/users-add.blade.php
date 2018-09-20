@@ -1,17 +1,17 @@
 <div id="searchUser">
 
     {!! Form::open(['route' => ['admin.ibusiness.userbusiness.addUsers', $business->id], 'method' => 'post']) !!}
-	
+
 	<div class="row">
         <div class="col-sm-10">
             <div class="form-group">
                 <select id="users_ids" name="users_ids[]" class="form-control" multiple style="width:100%;" required>
                                 
                 </select>
-                        
+
             </div>
-        </div> 
-        
+        </div>
+
         <div class="col-sm-2">
             <button type="submit" class="btn btn-info btn-flat">{{trans('ibusiness::userbusinesses.button.asign user')}}</button>
         </div>
@@ -35,8 +35,8 @@
 
 <script type="text/javascript">
 
-    
-    $(function(){ 
+
+    $(function(){
 
         $("#users_ids").each(function (i, obj) {
             if (!$(obj).hasClass("select2-hidden-accessible"))
@@ -47,7 +47,7 @@
 	                placeholder: "{{trans('ibusiness::userbusinesses.table.search the user')}}",
 	                minimumInputLength: "2",
 	                language:"{{locale()}}",
-	                
+
                     ajax: {
 		                url: "{{route('admin.ibusiness.userbusiness.searchUsers')}}",
 		                dataType: 'json',
@@ -59,16 +59,16 @@
 								business_id: {{$business->id}}
                             };
 		                },
-		                
+
                         processResults: function (data, params) {
 							params.page = params.page || 1;
-								   
+
 
 							return {
 		                        results: $.map(data.data, function (item) {
-                                    
+
                                     titl = item["first_name"]+" "+item["last_name"]+" - "+item["email"];
-		                           
+
 		                            return {
 		                                text: titl,
 		                                id: item["id"]
@@ -84,7 +84,7 @@
 	            });
 	        }
         });
-       
+
     });
 
 </script>

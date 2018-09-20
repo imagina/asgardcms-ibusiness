@@ -10,17 +10,20 @@ use Modules\Ibusiness\Http\Requests\UpdatebusinessproductRequest;
 use Modules\Ibusiness\Repositories\businessproductRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 
+use Modules\Ibusiness\Repositories\BusinessRepository;
+
 class businessproductController extends AdminBaseController
 {
     /**
      * @var businessproductRepository
      */
     private $businessproduct;
+    private $business;
 
-    public function __construct(businessproductRepository $businessproduct)
+    public function __construct(businessproductRepository $businessproduct,BusinessRepository $business)
     {
         parent::__construct();
-
+        $this->business = $business;
         $this->businessproduct = $businessproduct;
     }
 
@@ -66,9 +69,10 @@ class businessproductController extends AdminBaseController
      * @param  businessproduct $businessproduct
      * @return Response
      */
-    public function edit(businessproduct $businessproduct)
+    public function edit($id)
     {
-        return view('ibusiness::admin.businessproducts.edit', compact('businessproduct'));
+        $business = $this->business->getById($id);
+        return view('ibusiness::admin.businessproducts.edit', compact('business'));
     }
 
     /**

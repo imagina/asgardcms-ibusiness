@@ -113,12 +113,13 @@ class userbusinessController extends AdminBaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  userbusiness $userbusiness
+     * @param  business $id
      * @return Response
      */
-    public function edit(userbusiness $userbusiness)
+    public function edit($id)
     {
-        return view('ibusiness::admin.userbusinesses.edit', compact('userbusiness'));
+        $business = $this->business->getById($id);
+        return view('ibusiness::admin.userbusinesses.edit', compact('business'));
     }
 
     /**
