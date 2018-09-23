@@ -97,6 +97,11 @@
               <a v-if="item.status == 0" title="{{trans('ibusiness::frontend.buttons.pay')}}" class="btn btn-sm btn-success btn-flat mx-1" >
                 <i class="fa fa-money" aria-hidden="true"></i>
               </a>
+              @if(Auth::user()->hasAccess(['ibusiness.orders.permissions.edit']))
+              <a v-bind:href="'{{url('/business/preorder/edit')}}/'+item.id" title="{{trans('ibusiness::frontend.buttons.edit')}}" class="btn btn-sm btn-info btn-flat mx-1">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </a>
+              @endif
             </td>
           </tr>
         </tbody>

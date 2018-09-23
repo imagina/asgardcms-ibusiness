@@ -11,31 +11,33 @@
             </tr>
             </thead>
             <tbody>
-
-            @foreach ($business->users as $user)
-
+                
+            @for($i=0;$i<4;$i++)
+           
                 <tr>
-                    <td>{{$user->id}}</td>
-                    <td>{{$user->first_name}}</td>
-                    <td>{{$user->last_name}}</td>
-                    <td>{{$user->email}}</td>
+                    <td>{{$i}}</td>
+                    <td>xxxxx</td>
+                    <td>xxxxx</td>
+                    <td>xxxxx@email.com</td>
                     <td>
-                        @foreach ($user->roles as $role)
-                                {{$role->name}}
-                        @endforeach
+                        @if($i%2==0)
+                            <span class="label label-info">XXXXXXXX</span>
+                        @else
+                            <span class="label label-warning">XXXXXXXX</span>
+                        @endif
                     </td>
-
+                        
                     <td>
                         <div class="btn-group">
-                            <button title="{{trans('ibusiness::userbusinesses.table.unlink')}}" class="btn btn-sm btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.ibusiness.userbusiness.destroy', [$business->id,$user->id]) }}">
+                            <button title="{{trans('ibusiness::userbusinesses.table.unlink')}}" class="btn btn-sm btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="">
                                 <i class="fa fa-unlink"></i>
                             </button>
                         </div>
                     </td>
 
                 </tr>
-
-            @endforeach
+                
+            @endfor
 
             </tbody>
             <tfoot>
@@ -60,7 +62,7 @@
 
 <script type="text/javascript">
 
-    $(function(){
+    $(function(){ 
 
         $('.data-table').dataTable({
                 "paginate": true,
@@ -74,7 +76,7 @@
                     "url": '<?php echo Module::asset("core:js/vendor/datatables/{$locale}.json") ?>'
                 }
         });
-
+       
     });
 
 </script>

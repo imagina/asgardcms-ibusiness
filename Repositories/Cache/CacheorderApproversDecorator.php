@@ -2,12 +2,12 @@
 
 namespace Modules\Ibusiness\Repositories\Cache;
 
-use Modules\Ibusiness\Repositories\orderApproversRepository;
+use Modules\Ibusiness\Repositories\OrderApproversRepository;
 use Modules\Core\Repositories\Cache\BaseCacheDecorator;
 
-class CacheorderApproversDecorator extends BaseCacheDecorator implements orderApproversRepository
+class CacheOrderApproversDecorator extends BaseCacheDecorator implements OrderApproversRepository
 {
-    public function __construct(orderApproversRepository $orderapprovers)
+    public function __construct(OrderApproversRepository $orderapprovers)
     {
         parent::__construct();
         $this->entityName = 'ibusiness.orderapprovers';

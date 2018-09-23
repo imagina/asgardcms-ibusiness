@@ -4,6 +4,7 @@ namespace Modules\Ibusiness\Repositories;
 
 use Modules\Core\Repositories\BaseRepository;
 
-interface orderApproversRepository extends BaseRepository
+interface OrderApproversRepository extends BaseRepository
 {
+  public function validateAllApproversApproved($order_id);
 }

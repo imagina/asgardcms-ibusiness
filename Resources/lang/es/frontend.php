@@ -27,6 +27,7 @@ return [
         'create preorder' => 'Crear Pedido',
         'add_to_order'=>'Agregar al pedido',
         'generate_preorder'=>'Generar Pedido',
+        'update_preorder'=>'Actualizar Pedido',
         'save'=> 'Guardar',
         'see' => 'Ver',
         'pay' => 'Pagar',
@@ -35,7 +36,8 @@ return [
         'search'=>'Buscar',
         'page' => 'Página',
         'showing'=>'Mostrando',
-        'records of'=>'Registros de'
+        'records of'=>'Registros de',
+        'edit' => 'Editar'
 
     ],
 
@@ -44,6 +46,8 @@ return [
 
     ],
     'messages' => [
+      'update preorder success' => 'Pedido actualizado satisfactoriamente.'
+
     ],
     'validation' => [
       'business_no_products'=>'Esta empresa no tiene productos asociados',
@@ -51,7 +55,6 @@ return [
       'not_rol_approver'=>'Esta empresa no posee usuarios con rol aprobador creados',
       'orders_product_exceed_limit' => 'Se ha eliminado el ultimo producto de la orden, por superar el presupuesto',
       'payment_method_required'=>'Debes seleccionar un método de pago'
-
     ],
 
 ];

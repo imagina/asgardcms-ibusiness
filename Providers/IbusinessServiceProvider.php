@@ -33,13 +33,8 @@ class IbusinessServiceProvider extends ServiceProvider
             $event->load('userbusinesses', array_dot(trans('ibusiness::userbusinesses')));
             $event->load('orderapprovers', array_dot(trans('ibusiness::orderapprovers')));
             $event->load('businessproducts', array_dot(trans('ibusiness::businessproducts')));
+            $event->load('addresses', array_dot(trans('ibusiness::addresses')));
             // append translations
-
-
-
-
-
-
 
         });
     }
@@ -76,42 +71,55 @@ class IbusinessServiceProvider extends ServiceProvider
             }
         );
         $this->app->bind(
-            'Modules\Ibusiness\Repositories\userbusinessRepository',
+            'Modules\Ibusiness\Repositories\UserBusinessRepository',
             function () {
-                $repository = new \Modules\Ibusiness\Repositories\Eloquent\EloquentuserbusinessRepository(new \Modules\Ibusiness\Entities\userbusiness());
+                $repository = new \Modules\Ibusiness\Repositories\Eloquent\EloquentUserBusinessRepository(new \Modules\Ibusiness\Entities\UserBusiness());
 
                 if (! config('app.cache')) {
                     return $repository;
                 }
 
-                return new \Modules\Ibusiness\Repositories\Cache\CacheuserbusinessDecorator($repository);
+                return new \Modules\Ibusiness\Repositories\Cache\CacheUserBusinessDecorator($repository);
             }
         );
         $this->app->bind(
-            'Modules\Ibusiness\Repositories\orderApproversRepository',
+            'Modules\Ibusiness\Repositories\OrderApproversRepository',
             function () {
-                $repository = new \Modules\Ibusiness\Repositories\Eloquent\EloquentorderApproversRepository(new \Modules\Ibusiness\Entities\orderApprovers());
+                $repository = new \Modules\Ibusiness\Repositories\Eloquent\EloquentOrderApproversRepository(new \Modules\Ibusiness\Entities\OrderApprovers());
 
                 if (! config('app.cache')) {
                     return $repository;
                 }
 
-                return new \Modules\Ibusiness\Repositories\Cache\CacheorderApproversDecorator($repository);
+                return new \Modules\Ibusiness\Repositories\Cache\CacheOrderApproversDecorator($repository);
             }
         );
         $this->app->bind(
-            'Modules\Ibusiness\Repositories\businessproductRepository',
+            'Modules\Ibusiness\Repositories\BusinessProductRepository',
             function () {
-                $repository = new \Modules\Ibusiness\Repositories\Eloquent\EloquentbusinessproductRepository(new \Modules\Ibusiness\Entities\businessproduct());
+                $repository = new \Modules\Ibusiness\Repositories\Eloquent\EloquentBusinessProductRepository(new \Modules\Ibusiness\Entities\BusinessProduct());
 
                 if (! config('app.cache')) {
                     return $repository;
                 }
 
-                return new \Modules\Ibusiness\Repositories\Cache\CachebusinessproductDecorator($repository);
+                return new \Modules\Ibusiness\Repositories\Cache\CacheBusinessProductDecorator($repository);
+            }
+        );
+        $this->app->bind(
+            'Modules\Ibusiness\Repositories\AddressRepository',
+            function () {
+                $repository = new \Modules\Ibusiness\Repositories\Eloquent\EloquentAddressRepository(new \Modules\Ibusiness\Entities\Address());
+
+                if (! config('app.cache')) {
+                    return $repository;
+                }
+
+                return new \Modules\Ibusiness\Repositories\Cache\CacheAddressDecorator($repository);
             }
         );
 // add bindings
+
 
 
 

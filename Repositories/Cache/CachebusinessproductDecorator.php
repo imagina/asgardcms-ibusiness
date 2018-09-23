@@ -2,12 +2,12 @@
 
 namespace Modules\Ibusiness\Repositories\Cache;
 
-use Modules\Ibusiness\Repositories\businessproductRepository;
+use Modules\Ibusiness\Repositories\BusinessProductRepository;
 use Modules\Core\Repositories\Cache\BaseCacheDecorator;
 
-class CachebusinessproductDecorator extends BaseCacheDecorator implements businessproductRepository
+class CacheBusinessProductDecorator extends BaseCacheDecorator implements businessproductRepository
 {
-    public function __construct(businessproductRepository $businessproduct)
+    public function __construct(BusinessProductRepository $businessproduct)
     {
         parent::__construct();
         $this->entityName = 'ibusiness.businessproducts';

@@ -5,19 +5,20 @@ namespace Modules\Ibusiness\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class userbusiness extends Pivot
+class UserBusiness extends Pivot
 {
 
 
     protected $table = 'ibusiness__userbusinesses';
     protected $fillable = [
-        'businesses_id',
+        'business_id',
         'user_id'
     ];
 
+
     public function business()
     {
-        return $this->belongsTo('Modules\Ibusiness\Entities\Business', 'businesses_id');
+        return $this->belongsTo('Modules\Ibusiness\Entities\Business', 'business_id');
     }
     public function user()
     {

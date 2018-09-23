@@ -4,17 +4,18 @@ namespace Modules\Ibusiness\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Modules\Ibusiness\Entities\userbusiness;
+use Illuminate\Support\Facades\Input;
+use Modules\Ibusiness\Entities\UserBusiness;
 use Modules\Ibusiness\Http\Requests\CreateuserbusinessRequest;
 use Modules\Ibusiness\Http\Requests\UpdateuserbusinessRequest;
-use Modules\Ibusiness\Repositories\userbusinessRepository;
+use Modules\Ibusiness\Repositories\UserBusinessRepository;
 use Modules\Ibusiness\Entities\Business;
 use Modules\User\Entities\Sentinel\User;
 use Modules\User\Repositories\Sentinel\SentinelUserRepository;
 use Modules\Ibusiness\Repositories\BusinessRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 
-class userbusinessController extends AdminBaseController
+class UserBusinessController extends AdminBaseController
 {
     /**
      * @var userbusinessRepository
@@ -23,7 +24,7 @@ class userbusinessController extends AdminBaseController
     private $business;
     private $users;
 
-    public function __construct(userbusinessRepository $userbusiness,BusinessRepository $business,SentinelUserRepository $users)
+    public function __construct(UserBusinessRepository $userbusiness,BusinessRepository $business,SentinelUserRepository $users)
     {
         parent::__construct();
         $this->business = $business;
@@ -38,7 +39,7 @@ class userbusinessController extends AdminBaseController
      */
     public function index()
     {
-      $userbusinesses=userbusiness::with('business','user')->get();
+      $userbusinesses=UserBusiness::with('business','user')->get();
         //$userbusinesses = $this->userbusiness->all();
 
         return view('ibusiness::admin.userbusinesses.index', compact('userbusinesses'));
@@ -56,7 +57,7 @@ class userbusinessController extends AdminBaseController
       $users=$this->users->all();
       $array=array();
       foreach ($users as $user){
-        $userBusinesses=userbusiness::where('user_id',$user->id)->get();
+        $userBusinesses=UserBusiness::where('user_id',$user->id)->get();
         $businessName="";
         if(count($userBusinesses)>0){
           foreach($userBusinesses as $businessess){
@@ -91,7 +92,7 @@ class userbusinessController extends AdminBaseController
      * @param  CreateuserbusinessRequest $request
      * @return Response
      */
-    public function store(CreateuserbusinessRequest $request)
+    public function store(CreateUserBusinessRequest $request)
     {
       $users=explode(",",$request->users);
       $businesses_id;
@@ -102,7 +103,7 @@ class userbusinessController extends AdminBaseController
         $businesses_id=$request->company;
       for($i=0;$i<count($users);$i++){
         $user_id=$users[$i];
-        $userBusinesses=userbusiness::where('user_id',$user_id)->where('businesses_id',$businesses_id)->first();
+        $userBusinesses=UserBusiness::where('user_id',$user_id)->where('businesses_id',$businesses_id)->first();
         if(count($userBusinesses)<=0)
         $this->userbusiness->create(["_token"=>$request->_token,"user_id"=>$user_id,"businesses_id"=>$businesses_id]);
       }
@@ -129,7 +130,7 @@ class userbusinessController extends AdminBaseController
      * @param  UpdateuserbusinessRequest $request
      * @return Response
      */
-    public function update(userbusiness $userbusiness, UpdateuserbusinessRequest $request)
+    public function update(UserBusiness $userbusiness, UpdateUserBusinessRequest $request)
     {
         $this->userbusiness->update($userbusiness, $request->all());
 
@@ -143,11 +144,61 @@ class userbusinessController extends AdminBaseController
      * @param  userbusiness $userbusiness
      * @return Response
      */
-    public function destroy(userbusiness $userbusiness)
+    public function destroy($business_id,$user_id)
     {
-        $this->userbusiness->destroy($userbusiness);
 
-        return redirect()->route('admin.ibusiness.userbusiness.index')
-            ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('ibusiness::userbusinesses.title.userbusinesses')]));
+        $business = $this->business->getById($business_id);
+        $business->users()->detach($user_id);
+
+        return redirect()->route('admin.ibusiness.userbusiness.edit', [$business->id])
+        ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('ibusiness::userbusinesses.title.userbusinesses')]));
+
     }
+
+    /**
+     * Search Users Via Ajax Select 2.
+     *
+     * @param  q
+     * @return users
+     */
+    public function searchUsers()
+    {
+
+        $data = array();
+        $q = strtolower(Input::get('q'));
+        $business_id = Input::get('business_id');
+
+        $users = User::with(['roles','businesses'])
+        ->select('id','first_name','last_name','email')
+        ->where("first_name","like","%{$q}%")
+        ->orWhere("last_name","like","%{$q}%")
+        ->get();
+
+        $data["data"] = $users;
+
+        return response()->json($data);
+
+    }
+
+
+     /**
+     * Add Users to Business (relation).
+     *
+     * @param  request
+     * @return reedirect
+     */
+    public function addUsers(Request $request,$business_id){
+
+      if($request->users_ids){
+
+        $business = $this->business->getById($business_id);
+        $business->users()->syncWithoutDetaching($request->users_ids);
+
+      }
+
+      return redirect()->route('admin.ibusiness.userbusiness.edit', [$business->id])
+      ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('ibusiness::userbusinesses.title.userbusinesses')]));
+
+    }
+
 }

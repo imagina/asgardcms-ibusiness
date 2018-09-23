@@ -1,7 +1,7 @@
 <div class="box">
 
         <div class="box-header with-border">
-
+            
             <h3 class="box-title text-uppercase ">
                 <strong>{{trans('ibusiness::userbusinesses.table.users')}}</strong>
             </h3>
@@ -26,5 +26,20 @@
 
         </div>
 
-
+        <br><br>
+        <hr>
+        <div class="alert alert-danger alert-dismissible">
+            
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>DUDAS!</strong> <br> 
+                    
+            - Buscar usuario (Autocomplete) ( Creo que JqueryUI no esta por defecto) <br>
+            - Asignar Usuario (Via AJAX)<br>
+            - Recargar la tabla
+            <br><br>
+            - Desvincular Usuario (Probar la forma de asgard o por Ajax) <br>
+            - Recargar la tabla     
+        </div>
+    
+            
 </div>

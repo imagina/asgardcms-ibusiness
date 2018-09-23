@@ -5,7 +5,7 @@ namespace Modules\Ibusiness\Repositories\Cache;
 use Modules\Ibusiness\Repositories\userbusinessRepository;
 use Modules\Core\Repositories\Cache\BaseCacheDecorator;
 
-class CacheuserbusinessDecorator extends BaseCacheDecorator implements userbusinessRepository
+class CacheUserBusinessDecorator extends BaseCacheDecorator implements userbusinessRepository
 {
     public function __construct(userbusinessRepository $userbusiness)
     {

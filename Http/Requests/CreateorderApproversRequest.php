@@ -4,7 +4,7 @@ namespace Modules\Ibusiness\Http\Requests;
 
 use Modules\Core\Internationalisation\BaseFormRequest;
 
-class CreateorderApproversRequest extends BaseFormRequest
+class CreateOrderApproversRequest extends BaseFormRequest
 {
     public function rules()
     {

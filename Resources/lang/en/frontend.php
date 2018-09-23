@@ -37,9 +37,12 @@ return [
         'back' => 'Back',
         'add_to_order'=>'Add to order',
         'generate_preorder'=>'Generate Pre-order',
+        'update_preorder'=>'Update Pre-order',
         'save'=> 'Save',
         'rows'=>'Rows',
-        'search'=>'Search'
+        'search'=>'Search',
+        'edit' => 'Edit'
+
 
     ],
     'status' => [
@@ -49,6 +52,8 @@ return [
       'total_preorder'=>'Total of the PreOrder'
     ],
     'messages' => [
+      'update preorder success' => 'Pre-order successfully updated'
+      
     ],
     'validation' => [
       'business_no_products'=>'This company has no associated products',

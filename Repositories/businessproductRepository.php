@@ -4,6 +4,8 @@ namespace Modules\Ibusiness\Repositories;
 
 use Modules\Core\Repositories\BaseRepository;
 
-interface businessproductRepository extends BaseRepository
+interface BusinessProductRepository extends BaseRepository
 {
+  public function relationProduct($business_id,$product_id);
+  public function allProductOfBusiness($business_id);
 }

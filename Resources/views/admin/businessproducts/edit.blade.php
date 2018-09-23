@@ -12,8 +12,7 @@
 @stop
 
 @section('content')
-@include('ibusiness::admin.businessproducts.partials.modal-update-price')
-
+   
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom">
@@ -34,7 +33,7 @@
             </div> {{-- end nav-tabs-custom --}}
         </div>
     </div>
-
+    
 @stop
 
 @section('footer')

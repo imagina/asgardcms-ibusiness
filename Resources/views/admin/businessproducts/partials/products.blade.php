@@ -1,7 +1,7 @@
 <div class="box">
 
         <div class="box-header with-border">
-
+            
             <h3 class="box-title text-uppercase ">
                 <strong>{{trans('ibusiness::businessproducts.table.products')}}</strong>
             </h3>
@@ -25,5 +25,5 @@
             @include('ibusiness::admin.businessproducts.partials.products-table')
 
         </div>
-
+     
 </div>

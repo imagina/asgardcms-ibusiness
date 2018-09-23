@@ -16,7 +16,7 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <div class="tab-content">
-
+                    
                     <?php $i = 0; ?>
                     @foreach (LaravelLocalization::getSupportedLocales() as $locale => $language)
                         <?php $i++; ?>
