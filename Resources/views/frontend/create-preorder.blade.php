@@ -82,33 +82,44 @@
         </div>
         <div class="card-body">
           <div class="col text-center" v-if="businessproducts.length>0">
-            <h3>{{trans('icommerce::products.plural')}}</h3>
+            <label class="mb-3"><strong>{{trans('ibusiness::frontend.title.select_category_see_products')}}:</strong></label>
+            <select class="form-control" v-model="category_id">
+              <option value="0">{{trans('ibusiness::frontend.title.see_all_products')}}</option>
+              <option v-for="category in productCategories" v-bind:value="category.id">
+                @{{category.name}}
+              </option>
+            </select>
+            <hr>
+            <!-- <h4>{{trans('icommerce::products.plural')}}</h4> -->
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
                 <thead>
                   <tr>
                     <th>{{trans('icommerce::products.table.image')}}</th>
                     <th>{{trans('icommerce::products.table.title')}}</th>
-                    <th>{{trans('icommerce::products.table.principal category')}}</th>
+                    <!-- <th @click="sort('product')">{{trans('icommerce::products.table.principal category')}}
+                      <i v-if="currentSortDir=='asc'" class="fa fa-arrow-up"></i>
+                      <i v-else class="fa fa-arrow-down"></i>
+                    </th> -->
                     <th>{{trans('icommerce::products.table.price')}}</th>
                     <th>{{ trans('core::core.table.actions') }}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="product in businessproducts">
+                  <tr v-for="product in productsBusiness">
                     <td>
                       <a v-if="product.product.options.mainimage != null" v-bind:href="product.product.slug" class="cart-img float-left">
                         <img v-if="product.product.options.mainimage != null" class="img-fluid" v-bind:src="'{{url('/')}}/'+product.product.options.mainimage"
-                             v-bind:alt="product.product.title.es">
+                        v-bind:alt="product.product.title.es">
                         <img v-else class="img-fluid"
-                             src="{{url('modules/icommerce/img/product/default.jpg')}}"
-                             v-bind:alt="product.product.title.es">
+                        src="{{url('modules/icommerce/img/product/default.jpg')}}"
+                        v-bind:alt="product.product.title.es">
                       </a>
                     </td>
-                    <td>@{{product.product.title.es}}</td>
-                    <td>@{{product.product.category.title.es}}</td>
-                    <td>@{{product.price}}</td>
-                    <td>
+                    <td class="align-middle">@{{product.product.title.es}}</td>
+                    <!-- <td>@{{product.product.category.title.es}}</td> -->
+                    <td class="align-middle">@{{product.price}}</td>
+                    <td class="align-middle">
                       <button type="button" @click="addPreOrderProduct({id:product.product.id,name:product.product.title.es,price_unit:product.price,quantity:1,maxquantity:product.product.quantity})" class="btn btn-success btn-small" name="button">
                         <!-- {{trans('ibusiness::frontend.buttons.add_to_order')}} -->
                         <i class="fa fa-plus"></i>
@@ -221,7 +232,10 @@ const app=new Vue({
     business: {!! $userbusiness ? $userbusiness : "''"!!},
     payment_methods: {!! $payments ? $payments : "''"!!},
     business_id:0,
+    category_id:0,
     businessproducts:[],//products of business
+    businessproductsFiltered:[],//products of business filtered by category
+    productCategories:[],
     businessproductsOrder:[],
     locales: {!! json_encode(LaravelLocalization::getSupportedLocales()) !!},
     currentLocale: '{{locale()}}',
@@ -237,7 +251,9 @@ const app=new Vue({
       address_1:''
     },
     business_limit_budget:0,
-    total:0
+    total:0,
+    currentSort:'product',//field default
+    currentSortDir:'asc'//order asc
   },
   computed:{
     totalPrice(){
@@ -253,13 +269,44 @@ const app=new Vue({
       this.total=totalP;
       this.validateLimitBudget();
       return totalP;
-    }//totalPrice()
+    },//totalPrice()
+    productsBusiness:function() {
+      this.rows=0;
+      this.businessproductsFiltered=[];
+      for(var i=0;i<this.businessproducts.length;i++){
+        if(this.category_id==0){
+          this.businessproductsFiltered.push(this.businessproducts[i]);//push products filtered by category
+        }else{
+          if(this.businessproducts[i].product.category_id==this.category_id){
+            this.businessproductsFiltered.push(this.businessproducts[i]);//push products filtered by category
+          }//if this.category_id == this.businessproducts[i].product.category_id
+        }
+      }//for
+      return this.businessproductsFiltered.sort((a,b) => {
+        let modifier = 1;
+        if(this.currentSortDir === 'desc')
+        modifier = -1;
+        if(a[this.currentSort].category.title.es < b[this.currentSort].category.title.es)
+        return -1 * modifier;
+        if(a[this.currentSort].category.title.es > b[this.currentSort].category.title.es)
+        return 1 * modifier;
+        return 0;
+      });
+    },
   },
   methods:{
+    sort:function(s) {
+      //if s == current sort, reverse
+      if(s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+      }
+      this.currentSort = s;
+    },
     getBusinessProducts(){
       axios.post('{{ url("api/ibusiness/products/") }}', {business_id:this.business_id}).then(response => {
         this.businessproducts=response.data.businessproduct;
         this.businessproductsOrder=[];//Clear productsOrder
+        this.loadCategories();
       }).catch(error => {
         console.log(error);//Error
       });
@@ -278,6 +325,23 @@ const app=new Vue({
         }//if
       }//for
     },//getBusinessProducts()
+    loadCategories(){
+      var categories=[];
+      var b=0;
+      for(var i=0;i<this.businessproducts.length;i++){
+        for(var s=0;s<categories.length;s++){
+          if(categories[s].nombre==this.businessproducts[i].product.category.title.es){
+            b=1;
+            break;
+          }//if
+        }//for
+        if(b==0){
+          categories.push({'name':this.businessproducts[i].product.category.title.es,'id':this.businessproducts[i].product.category_id});
+        }//b==0
+        console.log(this.businessproducts[i]);
+      }//for
+      this.productCategories=categories;
+    },
     addPreOrderProduct(product){
       var b=0;
       for(var i=0;i<this.businessproductsOrder.length;i++){
