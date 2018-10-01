@@ -85,8 +85,8 @@
             <label class="mb-3"><strong>{{trans('ibusiness::frontend.title.select_category_see_products')}}:</strong></label>
             <select class="form-control" v-model="category_id">
               <option value="0">{{trans('ibusiness::frontend.title.see_all_products')}}</option>
-              <option v-for="category in productCategories" v-bind:value="category.id">
-                @{{category.name}}
+              <option v-for="categories in productCategories" v-bind:value="categories.id">
+                @{{categories.name}}
               </option>
             </select>
             <hr>
@@ -98,112 +98,112 @@
                     <th>{{trans('icommerce::products.table.image')}}</th>
                     <th>{{trans('icommerce::products.table.title')}}</th>
                     <!-- <th @click="sort('product')">{{trans('icommerce::products.table.principal category')}}
-                      <i v-if="currentSortDir=='asc'" class="fa fa-arrow-up"></i>
-                      <i v-else class="fa fa-arrow-down"></i>
-                    </th> -->
-                    <th>{{trans('icommerce::products.table.price')}}</th>
-                    <th>{{ trans('core::core.table.actions') }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="product in productsBusiness">
-                    <td>
-                      <a v-if="product.product.options.mainimage != null" v-bind:href="product.product.slug" class="cart-img float-left">
-                        <img v-if="product.product.options.mainimage != null" class="img-fluid" v-bind:src="'{{url('/')}}/'+product.product.options.mainimage"
-                        v-bind:alt="product.product.title.es">
-                        <img v-else class="img-fluid"
-                        src="{{url('modules/icommerce/img/product/default.jpg')}}"
-                        v-bind:alt="product.product.title.es">
-                      </a>
-                    </td>
-                    <td class="align-middle">@{{product.product.title.es}}</td>
-                    <!-- <td>@{{product.product.category.title.es}}</td> -->
-                    <td class="align-middle">@{{product.price}}</td>
-                    <td class="align-middle">
-                      <button type="button" @click="addPreOrderProduct({id:product.product.id,name:product.product.title.es,price_unit:product.price,quantity:1,maxquantity:product.product.quantity})" class="btn btn-success btn-small" name="button">
-                        <!-- {{trans('ibusiness::frontend.buttons.add_to_order')}} -->
-                        <i class="fa fa-plus"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div v-else class="text-center">
-            <h5>{{trans('ibusiness::frontend.validation.business_no_products')}}</h5>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-sm-6" v-show="businessproductsOrder.length>0">
-      <div class="card">
-        <div class="card-header bg-secondary text-white">
-          <i style="margin-right: 5px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-          {{ trans('ibusiness::businessproducts.title.orderproducts') }}
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>{{trans('icommerce::products.table.title')}}</th>
+                    <i v-if="currentSortDir=='asc'" class="fa fa-arrow-up"></i>
+                    <i v-else class="fa fa-arrow-down"></i>
+                  </th> -->
                   <th>{{trans('icommerce::products.table.price')}}</th>
-                  <th>{{trans('icommerce::products.table.quantity')}}</th>
-                  <th>{{trans('ibusiness::frontend.table.total')}}</th>
                   <th>{{ trans('core::core.table.actions') }}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(product,index) in businessproductsOrder">
+                <tr v-for="product in productsBusiness">
                   <td>
-                    @{{product.name}}
+                    <a v-if="product.image != null" v-bind:href="product.slug" class="cart-img float-left">
+                      <img v-if="product.image != null" class="img-fluid" v-bind:src="product.image"
+                      v-bind:alt="product.title">
+                      <img v-else class="img-fluid"
+                      src="{{url('modules/icommerce/img/product/default.jpg')}}"
+                      v-bind:alt="product.title">
+                    </a>
                   </td>
-                  <td>
-                    @{{currencySymbolLeft}} @{{product.price_unit}}
-                  </td>
-                  <td >
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="waves-input-wrapper waves-effect waves-light">
-                          <input type="button" @click="product.quantity--" class="btn btn-outline-primary border-right-0 quantity-down" field="quantity" value="-">
-                        </div>
-                      </div>
-                      <input type="text" onkeypress="return isNumberKey(event)" v-model="product.quantity" style="text-align:center;" @keyup="validationOrderProduct(index)" v-bind:max="product.maxquantity" class="form-control quantity border-primary" name="" value="">
-                      <div class="input-group-append">
-                        <div class="waves-input-wrapper waves-effect waves-light">
-                          <input type="button" value="+" @click="product.quantity++" class="btn btn-outline-primary border-left-0 quantity-up" field="quantity">
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>@{{currencySymbolLeft}} @{{product.price_unit*product.quantity}}</td>
-                  <td>
-                    <button type="button" class="btn btn-danger btn-sm" @click="deleteProductOrder(index)" name="button"><i class="fa fa-trash"></i></button>
+                  <td class="align-middle">@{{product.title}}</td>
+                  <!-- <td>@{{product.product.category.title.es}}</td> -->
+                  <td class="align-middle">@{{product.price}}</td>
+                  <td class="align-middle">
+                    <button type="button" @click="addPreOrderProduct({id:product.product_id,name:product.title,price_unit:product.price,quantity:1,maxquantity:product.quantity})" class="btn btn-success btn-small" name="button">
+                      <!-- {{trans('ibusiness::frontend.buttons.add_to_order')}} -->
+                      <i class="fa fa-plus"></i>
+                    </button>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <hr>
-            <div class="row">
-              <div class="col-7">
-                <h5 class="font-weight-bold">{{trans('ibusiness::frontend.form.total_preorder')}}</h5>
-              </div>
-              <div class="col-5">
-                @{{currencySymbolLeft}} @{{totalPrice}}
-              </div>
+          </div>
+        </div>
+        <div v-else class="text-center">
+          <h5>{{trans('ibusiness::frontend.validation.business_no_products')}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6" v-show="businessproductsOrder.length>0">
+    <div class="card">
+      <div class="card-header bg-secondary text-white">
+        <i style="margin-right: 5px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        {{ trans('ibusiness::businessproducts.title.orderproducts') }}
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>{{trans('icommerce::products.table.title')}}</th>
+                <th>{{trans('icommerce::products.table.price')}}</th>
+                <th>{{trans('icommerce::products.table.quantity')}}</th>
+                <th>{{trans('ibusiness::frontend.table.total')}}</th>
+                <th>{{ trans('core::core.table.actions') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(product,index) in businessproductsOrder">
+                <td>
+                  @{{product.name}}
+                </td>
+                <td>
+                  @{{currencySymbolLeft}} @{{product.price_unit}}
+                </td>
+                <td >
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="waves-input-wrapper waves-effect waves-light">
+                        <input type="button" @click="product.quantity--" class="btn btn-outline-primary border-right-0 quantity-down" field="quantity" value="-">
+                      </div>
+                    </div>
+                    <input type="text" onkeypress="return isNumberKey(event)" v-model="product.quantity" style="text-align:center;" @keyup="validationOrderProduct(index)" v-bind:max="product.maxquantity" class="form-control quantity border-primary" name="" value="">
+                    <div class="input-group-append">
+                      <div class="waves-input-wrapper waves-effect waves-light">
+                        <input type="button" value="+" @click="product.quantity++" class="btn btn-outline-primary border-left-0 quantity-up" field="quantity">
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>@{{currencySymbolLeft}} @{{product.price_unit*product.quantity}}</td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm" @click="deleteProductOrder(index)" name="button"><i class="fa fa-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+          <div class="row">
+            <div class="col-7">
+              <h5 class="font-weight-bold">{{trans('ibusiness::frontend.form.total_preorder')}}</h5>
+            </div>
+            <div class="col-5">
+              @{{currencySymbolLeft}} @{{totalPrice}}
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <br>
-  <div class="row" v-show="businessproductsOrder.length>0">
-    <div class="mx-auto">
-      <button type="button" class="btn btn-primary text-uppercase" name="button" @click="sendPreOrder()">  {{trans('ibusiness::frontend.buttons.generate_preorder')}}</button>
-    </div>
+</div>
+<br>
+<div class="row" v-show="businessproductsOrder.length>0">
+  <div class="mx-auto">
+    <button type="button" class="btn btn-primary text-uppercase" name="button" @click="sendPreOrder()">  {{trans('ibusiness::frontend.buttons.generate_preorder')}}</button>
   </div>
+</div>
 
 </div>
 
@@ -252,7 +252,7 @@ const app=new Vue({
     },
     business_limit_budget:0,
     total:0,
-    currentSort:'product',//field default
+    currentSort:'category_id',//field default
     currentSortDir:'asc'//order asc
   },
   computed:{
@@ -277,7 +277,7 @@ const app=new Vue({
         if(this.category_id==0){
           this.businessproductsFiltered.push(this.businessproducts[i]);//push products filtered by category
         }else{
-          if(this.businessproducts[i].product.category_id==this.category_id){
+          if(this.businessproducts[i].category_id==this.category_id){
             this.businessproductsFiltered.push(this.businessproducts[i]);//push products filtered by category
           }//if this.category_id == this.businessproducts[i].product.category_id
         }
@@ -286,9 +286,9 @@ const app=new Vue({
         let modifier = 1;
         if(this.currentSortDir === 'desc')
         modifier = -1;
-        if(a[this.currentSort].category.title.es < b[this.currentSort].category.title.es)
+        if(a[this.currentSort] < b[this.currentSort])
         return -1 * modifier;
-        if(a[this.currentSort].category.title.es > b[this.currentSort].category.title.es)
+        if(a[this.currentSort] > b[this.currentSort])
         return 1 * modifier;
         return 0;
       });
@@ -303,13 +303,37 @@ const app=new Vue({
       this.currentSort = s;
     },
     getBusinessProducts(){
-      axios.post('{{ url("api/ibusiness/products/") }}', {business_id:this.business_id}).then(response => {
-        this.businessproducts=response.data.businessproduct;
+       var filters={
+           business_id:this.business_id,
+           order:{by:'created_at',type:'asc'},
+           paginate:10
+       };
+       var includes=[
+         'product','product.category'
+       ];
+      axios.get('{{route("ibusiness.api.products.businessproducts")}}', {
+        params: {
+          filters: filters,
+          includes:includes
+        }
+      })
+      .then(response => {
+        // console.log(response);
+        this.businessproducts=response.data.data;
         this.businessproductsOrder=[];//Clear productsOrder
         this.loadCategories();
-      }).catch(error => {
-        console.log(error);//Error
+      })
+      .catch(function (error) {
+        console.log(error);
       });
+
+      // axios.post('{{ url("api/ibusiness/products") }}', {business_id:this.business_id}).then(response => {
+      //   this.businessproducts=response.data.businessproduct;
+      //   this.businessproductsOrder=[];//Clear productsOrder
+      //   this.loadCategories();
+      // }).catch(error => {
+      //   console.log(error);//Error
+      // });
       for(var i=0;i<this.business.length;i++){
         if(this.business[i].business_id==this.business_id){
           for(var l=0;l<this.business[i].business.addresses.length;l++){
@@ -330,15 +354,14 @@ const app=new Vue({
       var b=0;
       for(var i=0;i<this.businessproducts.length;i++){
         for(var s=0;s<categories.length;s++){
-          if(categories[s].nombre==this.businessproducts[i].product.category.title.es){
+          if(categories[s].nombre==this.businessproducts[i].category_name){
             b=1;
             break;
           }//if
         }//for
         if(b==0){
-          categories.push({'name':this.businessproducts[i].product.category.title.es,'id':this.businessproducts[i].product.category_id});
+          categories.push({'name':this.businessproducts[i].category_name,'id':this.businessproducts[i].category_id});
         }//b==0
-        console.log(this.businessproducts[i]);
       }//for
       this.productCategories=categories;
     },

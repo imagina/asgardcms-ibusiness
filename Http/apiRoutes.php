@@ -25,8 +25,8 @@ $router->group(['prefix' => 'ibusiness'], function (Router $router) {
     });
 
     $router->group(['prefix' => 'products'], function (Router $router) {
-
-        $router->post('/', [
+        //Get all products of business - Params: business_id
+        $router->get('/', [
             'as' => 'ibusiness.api.products.businessproducts',
             'uses' => 'ProductController@Product',
         ]);
