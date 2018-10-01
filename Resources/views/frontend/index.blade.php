@@ -47,6 +47,7 @@
       </div>
     </div>
     @endif
+    @if(Auth::user()->roles()->first()->slug=='buyer' || Auth::user()->roles()->first()->slug=='approver')
     <div v-if="preordersTemp.length >= 1" >
       <div class="row">
         <div class="col-12 col-md-9 col-lg-9">
@@ -125,7 +126,7 @@
         No Results  <i class="fa fa-frown-o"></i>
       </div>
     </div>
-
+    @endif
   </div>
 
 </div>
@@ -233,13 +234,12 @@ const vue_index_ibusiness = new Vue({
       this.preorders = response.data.preorders;
       this.preordersTemp = response.data.preorders;
 
-    }
+    }//order_response
 
   },
   mounted: function () {
     this.$nextTick(function () {
       this.get_preorders(this.path);
-
       this.preloaded = false;
       setTimeout(function () {
         $('#content_preloader').fadeOut(1000, function () {

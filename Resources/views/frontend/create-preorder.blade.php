@@ -388,7 +388,8 @@ const app=new Vue({
         axios.post('{{ url("business/preorder/") }}', {business_id:this.business_id,businessproducts:this.businessproductsOrder,payment_method:this.payment_method}).then(response => {
           if(response.data.status==202){
             this.alerta(response.data.message,'success');
-            location.reload();
+            // location.reload();
+            window.location = response.data.url;
           }else{
             this.alerta(response.data.message,'error');
           }
