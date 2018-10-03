@@ -315,10 +315,6 @@ class PublicController extends BasePublicController
   return response()->json($response, $status ?? 200);
 }//preorderUpdatePost()
 
-public function procesos()
-{
-  $tpl = 'ibusiness::frontend.procesos';
-  return view($tpl);
-}//procesos()
+
 
 }
