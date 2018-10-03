@@ -122,6 +122,10 @@ class BusinessProductController extends AdminBaseController
       // return redirect()->route('admin.ibusiness.businessproduct.importproduct');
     }
 
+    public function importProductTrapeq(Request $request){
+      dd('asddad',$request->all());
+    }
+
     /**
      * Remove the specified resource from storage.
      *
