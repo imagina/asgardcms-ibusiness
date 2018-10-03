@@ -9,9 +9,13 @@ return [
         'preorder' => 'Pre-Orders',
         'create preorder' => 'Create Pre-Order',
         'approvers' => 'Approvers',
+        'payment_methods'=>'Payment Methods',
         'billing_address'=>'Billing address',
         'shipping_address'=>'Shipping address',
-        'approversCheck' => 'Save Order Status'
+        'approversCheck' => 'Save Order Status',
+        'select_category_see_products'=>'Select a category to see your products',
+        'see_all_products'=>'See all products'
+
     ],
 
     'table' => [
@@ -41,7 +45,8 @@ return [
         'save'=> 'Save',
         'rows'=>'Rows',
         'search'=>'Search',
-        'edit' => 'Edit'
+        'edit' => 'Edit',
+        'see_more'=>'See more'
 
 
     ],
@@ -53,7 +58,7 @@ return [
     ],
     'messages' => [
       'update preorder success' => 'Pre-order successfully updated'
-      
+
     ],
     'validation' => [
       'business_no_products'=>'This company has no associated products',

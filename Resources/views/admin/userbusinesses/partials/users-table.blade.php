@@ -12,24 +12,22 @@
             </thead>
             <tbody>
                 
-            @for($i=0;$i<4;$i++)
-           
+            @foreach ($business->users as $user)
+                
                 <tr>
-                    <td>{{$i}}</td>
-                    <td>xxxxx</td>
-                    <td>xxxxx</td>
-                    <td>xxxxx@email.com</td>
+                    <td>{{$user->id}}</td>
+                    <td>{{$user->first_name}}</td>
+                    <td>{{$user->last_name}}</td>
+                    <td>{{$user->email}}</td>
                     <td>
-                        @if($i%2==0)
-                            <span class="label label-info">XXXXXXXX</span>
-                        @else
-                            <span class="label label-warning">XXXXXXXX</span>
-                        @endif
+                        @foreach ($user->roles as $role)
+                                {{$role->name}}
+                        @endforeach
                     </td>
                         
                     <td>
                         <div class="btn-group">
-                            <button title="{{trans('ibusiness::userbusinesses.table.unlink')}}" class="btn btn-sm btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="">
+                            <button title="{{trans('ibusiness::userbusinesses.table.unlink')}}" class="btn btn-sm btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.ibusiness.userbusiness.destroy', [$business->id,$user->id]) }}">
                                 <i class="fa fa-unlink"></i>
                             </button>
                         </div>
@@ -37,7 +35,7 @@
 
                 </tr>
                 
-            @endfor
+            @endforeach
 
             </tbody>
             <tfoot>

@@ -8,9 +8,13 @@ return [
     'title' => [
         'preorder' => 'Pedidos',
         'create preorder' => 'Crear Pedido',
+        'approvers' => 'Aprobadores',
         'payment_methods'=>'Métodos de pago',
         'billing_address'=>'Dirección de envío',
-        'shipping_address'=>'Dirección de facturación'
+        'shipping_address'=>'Dirección de facturación',
+        'approversCheck' => 'SGuardar estado del pedido',
+        'select_category_see_products'=>'Selecciona una categoria para ver sus productos',
+        'see_all_products'=>'Ver todos los productos'
     ],
 
     'table' => [
@@ -37,7 +41,8 @@ return [
         'page' => 'Página',
         'showing'=>'Mostrando',
         'records of'=>'Registros de',
-        'edit' => 'Editar'
+        'edit' => 'Editar',
+        'see_more'=>'Ver más'
 
     ],
 

@@ -17,6 +17,7 @@ use Modules\Icommerce\Entities\Order;
 use Modules\Icommerce\Repositories\OrderRepository;
 use Modules\Ibusiness\Repositories\OrderApproversRepository;
 use Modules\User\Repositories\UserRepository;
+use Modules\Setting\Contracts\Setting;
 
 class OrderApproversController extends BasePublicController
 {
@@ -26,12 +27,14 @@ class OrderApproversController extends BasePublicController
     private $user;
     private $order;
     private $orderApprovers;
+    private $setting;
 
     public function __construct(
         Authentication $auth,
         UserRepository $user,
         OrderRepository $order,
-        OrderApproversRepository $orderApprovers
+        OrderApproversRepository $orderApprovers,
+        Setting $setting
         )
     {
 
@@ -40,6 +43,7 @@ class OrderApproversController extends BasePublicController
         $this->user = $user;
         $this->order = $order;
         $this->orderApprovers = $orderApprovers;
+        $this->setting = $setting;
 
     }
 
@@ -93,16 +97,47 @@ class OrderApproversController extends BasePublicController
     }
 
     public function update(Request $request){
-      try {
+        
+        try {
         $response=OrderApprovers::where('order_id',$request->order_id)->where('user_id',$request->approver_id)->update(['status'=>$request->status_id,'comment'=>$request->comment]);
         $approved=$this->orderApprovers->validateAllApproversApproved($request->order_id);
+            
         if($approved){
+          //All approvers approved preorder
           Order::where('id',$request->order_id)->update(['order_status'=>0]);
-          Order_History::where('id',$request->order_id)->update([
+          Order_History::create([
+            'order_id' => $request->order_id,
             'status' => 0,
             'notify' => 1,
           ]);
-        }
+          //Send mail admin:
+          $email_from = $this->setting->get('icommerce::from-email');
+          $email_to = explode(',',$this->setting->get('icommerce::form-emails'));
+          $sender  = $this->setting->get('core::site-name');
+          $order = $this->order->find($request->order_id);
+          $products=[];
+          foreach ($order->products as $product) {
+              array_push($products,[
+                  "title" => $product->title,
+                  "sku" => $product->sku,
+                  "quantity" => $product->pivot->quantity,
+                  "price" => $product->pivot->price,
+                  "total" => $product->pivot->total,
+              ]);
+          }//foreach products
+          $userEmail = $order->email;
+          $userFirstname = "{$order->first_name} {$order->last_name}";
+          $content=[
+              'order'=> $order,
+              'products' => $products,
+              'user' => $userFirstname
+          ];
+          $msjTheme = "icommerce::email.success_order";
+          $msjSubject = trans('icommerce::common.emailSubject.approved').$order->id;
+          $msjIntro = trans('icommerce::common.emailIntro.approved');
+          $mailAdmin = icommerce_emailSend(['email_from'=>[$email_from],'theme' => $msjTheme,'email_to' => $email_to,'subject' => $msjSubject, 'sender'=>$sender,'data' => array('title' => $msjSubject,'intro'=> $msjIntro,'content'=>$content)]);
+          $mailUser= icommerce_emailSend(['email_from'=>[$email_from],'theme' => $msjTheme,'email_to' => $userEmail,'subject' => $msjSubject, 'sender'=>$sender,'data' => array('title' => $msjSubject,'intro'=> $msjIntro,'content'=>$content)]);
+        }//if all approvers approved preorder
       } catch (\ErrorException $e) {
         $status = 500;
         $response = ['errors' => [

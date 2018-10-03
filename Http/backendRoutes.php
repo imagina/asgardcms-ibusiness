@@ -186,6 +186,11 @@ $router->group(['prefix' =>'/ibusiness'], function (Router $router) {
         'uses' => 'BusinessProductController@importProduct',
         'middleware' => 'can:ibusiness.businessproducts.edit'
     ]);
+    $router->post('import_product_trapeq/{id}/', [
+        'as' => 'admin.ibusiness.businessproduct.importproducttrapeq',
+        'uses' => 'BusinessProductController@importProductTrapeq',
+        'middleware' => 'can:ibusiness.businessproducts.edit'
+    ]);
     $router->post('getProduct/', [
         'as' => 'admin.ibusiness.businessproduct.update',
         'uses' => 'BusinessProductController@getProduct',

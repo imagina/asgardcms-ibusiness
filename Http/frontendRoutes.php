@@ -40,10 +40,4 @@ $router->group(['prefix' => trans('ibusiness::frontend.uri')], function (Router 
       'middleware'=>'logged.in'
     ]);
 
-    // Procesos para el frontend
-    $router->get('procesos', [
-        'as' => $locale . 'ibusiness.procesos',
-        'uses' => 'PublicController@procesos',
-    ]);
-
 });

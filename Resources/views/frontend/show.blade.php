@@ -293,6 +293,10 @@ const vue_show_ibusiness = new Vue({
       axios.put("{{route('ibusiness.api.orderapprovers.update')}}",{order_id:"{{$orderID}}",approver_id:this.user,status_id:this.statusSelected,comment:this.approver_comment}).then(response => {
         if(response.data){
           this.alerta("{{trans('ibusiness::orderapprovers.messages.order status approver success')}}",'success');
+          var urlAf = "{{route(locale().'.ibusiness')}}";
+          window.setTimeout(function(){
+            window.location.replace(urlAf);
+          }, 5000);
         }
       });
     },//update_status()
