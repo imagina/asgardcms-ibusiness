@@ -97,7 +97,7 @@ class PublicController extends BasePublicController
   public function preorderCreatePost(Request $request){
     //$request->business_id
     //$request->businessproducts
-    $buyers=$this->userbusiness->getUsersBuyersOfBusiness($request->business_id);
+    $buyers=$this->userbusiness->getUsersApproversOfBusiness($request->business_id);
     if(count($buyers)==0)
     return response()->json(['error'=>500,'message'=>trans('ibusiness::frontend.validation.not_rol_approver')]);
     $user = $this->auth->user();
@@ -313,12 +313,54 @@ class PublicController extends BasePublicController
     ];
   }//catch
   return response()->json($response, $status ?? 200);
-}//preorderUpdatePost()
+  }//preorderUpdatePost()
 
-public function procesos()
-{
-  $tpl = 'ibusiness::frontend.procesos';
-  return view($tpl);
-}//procesos()
+  /**
+  * Payment Reedirect
+  *
+  * @return
+  */
+  public function preorderPayment(Request $request){
+    try {
+
+      $order = $this->order->find($request->orderid);
+
+      //Session::put('orderID', $order->id);
+      $paymentMethods = config('asgard.icommerce.config.paymentmethods');
+
+      foreach ($paymentMethods as $paymentMethod)
+        if($paymentMethod['name']==$order->payment_method)
+          $urlPayment = route($paymentMethod['name']);
+
+      $response = array(
+        "message" => trans('icommerce::checkout.alerts.order_created'),
+        "url"=> $urlPayment,
+        "session" => "sesion"
+      );
+      /*
+        return response()->json([
+            "status" => "202",
+            "message" => trans('icommerce::checkout.alerts.order_created'),
+            "url" => $urlPayment,
+            "session" => session('orderID')
+        ]);
+        */
+
+
+    } catch (\Exception $e) {
+        \Log::error($e);
+        $status = 500;
+        $response = ['errors' => [
+          "code" => "501",
+          "source" => [
+            "pointer" => "publicController/payment",
+          ],
+          "title" => "Error",
+          "detail" => $e->getMessage()
+        ]
+      ];
+    }
+    return response()->json($response, $status ?? 200);
+  }
 
 }

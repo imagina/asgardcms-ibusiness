@@ -8,4 +8,5 @@ interface UserBusinessRepository extends BaseRepository
 {
   public function getBusinessUser($user_id);
   public function getUsersBuyersOfBusiness($business_id);
+  public function getUsersApproversOfBusiness($business_id);
 }

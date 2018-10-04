@@ -20,4 +20,14 @@ class EloquentUserBusinessRepository extends EloquentBaseRepository implements u
     }
     return $buyers;
   }//getUsersBuyersOfBusiness()
+  public function getUsersApproversOfBusiness($business_id){
+    $users=$this->model->with('business','user')->where('business_id',$business_id)->get();
+    $buyers=new Collection();
+    foreach($users as $user){
+      if($user->user->roles()->first()->slug=="approver"){
+        $buyers=$buyers->merge([$user->user]);
+      }
+    }
+    return $buyers;
+  }//getUsersBuyersOfBusiness()
 }
