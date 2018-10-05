@@ -328,40 +328,6 @@ class PublicController extends BasePublicController
       Session::put('orderID', $order->id);
       $paymentMethods = config('asgard.icommerce.config.paymentmethods');
 
-<<<<<<< Updated upstream
-  /**
-  * Payment Reedirect
-  *
-  * @return
-  */
-  public function preorderPayment(Request $request){
-    try {
-
-      $order = $this->order->find($request->orderid);
-
-      //Session::put('orderID', $order->id);
-      $paymentMethods = config('asgard.icommerce.config.paymentmethods');
-
-      foreach ($paymentMethods as $paymentMethod)
-        if($paymentMethod['name']==$order->payment_method)
-          $urlPayment = route($paymentMethod['name']);
-
-      $response = array(
-        "message" => trans('icommerce::checkout.alerts.order_created'),
-        "url"=> $urlPayment,
-        "session" => "sesion"
-      );
-      /*
-        return response()->json([
-            "status" => "202",
-            "message" => trans('icommerce::checkout.alerts.order_created'),
-            "url" => $urlPayment,
-            "session" => session('orderID')
-        ]);
-        */
-
-
-=======
       foreach ($paymentMethods as $paymentMethod)
         if($paymentMethod['name']==$order->payment_method)
           $urlPayment = route($paymentMethod['name']);
@@ -372,7 +338,6 @@ class PublicController extends BasePublicController
         "session" => session('orderID')
       );
      
->>>>>>> Stashed changes
     } catch (\Exception $e) {
         \Log::error($e);
         $status = 500;
