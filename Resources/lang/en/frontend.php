@@ -8,6 +8,7 @@ return [
     'title' => [
         'preorder' => 'Pre-Orders',
         'create preorder' => 'Create Pre-Order',
+        'edit preorder' => 'Edit Pre-Order',
         'approvers' => 'Approvers',
         'payment_methods'=>'Payment Methods',
         'billing_address'=>'Billing address',
@@ -46,7 +47,8 @@ return [
         'rows'=>'Rows',
         'search'=>'Search',
         'edit' => 'Edit',
-        'see_more'=>'See more'
+        'see_more'=>'See more',
+        'export_file_trapeq'=>'Export to trapeq file'
 
 
     ],
@@ -57,7 +59,8 @@ return [
       'total_preorder'=>'Total of the PreOrder'
     ],
     'messages' => [
-      'update preorder success' => 'Pre-order successfully updated'
+      'update preorder success' => 'Pre-order successfully updated',
+      'waiting' => 'Wait a moment'
 
     ],
     'validation' => [

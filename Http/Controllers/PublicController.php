@@ -21,6 +21,7 @@ use Modules\Icommerce\Entities\Order_History;
 use Modules\Icommerce\Entities\Order_Product;
 use Modules\Ibusiness\Entities\Business;
 use Modules\Ibusiness\Entities\OrderApprovers;
+use Session;
 
 class PublicController extends BasePublicController
 {
@@ -315,7 +316,19 @@ class PublicController extends BasePublicController
   return response()->json($response, $status ?? 200);
   }//preorderUpdatePost()
 
+  /**
+  * Payment Reedirect
+  *
+  * @return
+  */
+  public function preorderPayment(Request $request){
+    try {
 
+      $order = $this->order->find($request->orderid);
+      Session::put('orderID', $order->id);
+      $paymentMethods = config('asgard.icommerce.config.paymentmethods');
+
+<<<<<<< Updated upstream
   /**
   * Payment Reedirect
   *
@@ -348,6 +361,18 @@ class PublicController extends BasePublicController
         */
 
 
+=======
+      foreach ($paymentMethods as $paymentMethod)
+        if($paymentMethod['name']==$order->payment_method)
+          $urlPayment = route($paymentMethod['name']);
+          
+      $response = array(
+        "message" => trans('ibusiness::frontend.messages.waiting'),
+        "url"=> $urlPayment,
+        "session" => session('orderID')
+      );
+     
+>>>>>>> Stashed changes
     } catch (\Exception $e) {
         \Log::error($e);
         $status = 500;

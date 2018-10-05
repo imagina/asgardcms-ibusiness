@@ -40,4 +40,10 @@ $router->group(['prefix' => trans('ibusiness::frontend.uri')], function (Router 
       'middleware'=>'logged.in'
     ]);
 
+    $router->post('/preorder/payment', [
+        'as' => 'ibusiness.preorder.payment',
+        'uses' => 'PublicController@preorderPayment',
+        'middleware'=>'logged.in'
+    ]);
+
 });

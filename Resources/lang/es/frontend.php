@@ -8,11 +8,12 @@ return [
     'title' => [
         'preorder' => 'Pedidos',
         'create preorder' => 'Crear Pedido',
+        'edit preorder' => 'Editar Pedido',
         'approvers' => 'Aprobadores',
         'payment_methods'=>'Métodos de pago',
         'billing_address'=>'Dirección de envío',
         'shipping_address'=>'Dirección de facturación',
-        'approversCheck' => 'SGuardar estado del pedido',
+        'approversCheck' => 'Guardar estado del pedido',
         'select_category_see_products'=>'Selecciona una categoria para ver sus productos',
         'see_all_products'=>'Ver todos los productos'
     ],
@@ -42,8 +43,13 @@ return [
         'showing'=>'Mostrando',
         'records of'=>'Registros de',
         'edit' => 'Editar',
-        'see_more'=>'Ver más'
+        'see_more'=>'Ver más',
+        'export_file_trapeq'=>'Exportar a archivo trapeq'
 
+    ],
+
+    'status' => [
+        'approved' => 'Aprobado'
     ],
 
     'form' => [
@@ -51,7 +57,8 @@ return [
 
     ],
     'messages' => [
-      'update preorder success' => 'Pedido actualizado satisfactoriamente.'
+      'update preorder success' => 'Pedido actualizado satisfactoriamente.',
+      'waiting' => 'Espere un momento'
 
     ],
     'validation' => [

@@ -95,14 +95,14 @@
               <a v-bind:href="item.url" title="{{trans('ibusiness::frontend.buttons.see')}}" class="btn btn-sm btn-danger btn-flat text-white"  >
                 <i class="fa fa-eye" aria-hidden="true"></i>
               </a>
-              <a v-if="item.status == 0" title="{{trans('ibusiness::frontend.buttons.pay')}}" class="btn btn-sm btn-success btn-flat mx-1" >
-                <i class="fa fa-money" aria-hidden="true"></i>
-              </a>
               @if(Auth::user()->hasAccess(['ibusiness.orders.permissions.edit']))
-              <a v-bind:href="'{{url('/business/preorder/edit')}}/'+item.id" title="{{trans('ibusiness::frontend.buttons.edit')}}" class="btn btn-sm btn-info btn-flat mx-1">
+              <a v-if="item.status == 10" v-bind:href="'{{url('/business/preorder/edit')}}/'+item.id" title="{{trans('ibusiness::frontend.buttons.edit')}}" class="btn btn-sm btn-info btn-flat mx-1">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </a>
               @endif
+              <a v-if="item.status == 0"  v-on:click="execute_payment(item.id)" title="{{trans('ibusiness::frontend.buttons.pay')}}" class="btn btn-sm btn-success btn-flat mx-1 text-white" >
+                <i class="fa fa-money" aria-hidden="true"></i>
+              </a>
             </td>
           </tr>
         </tbody>
@@ -234,8 +234,42 @@ const vue_index_ibusiness = new Vue({
       this.preorders = response.data.preorders;
       this.preordersTemp = response.data.preorders;
 
-    }//order_response
+    },//order_response
+    
+    execute_payment: function (orderID){
 
+      axios.post('{{route("ibusiness.preorder.payment") }}',{orderid:orderID}).then(function (response) {
+        if(response.data.url){
+            vue_index_ibusiness.alerta(response.data.message,'success');
+            window.location.replace(response.data.url);
+        }
+      }).catch(error => {
+          console.log(error);
+          vue_index_ibusiness.alerta("Error",'error');
+      });
+
+    },
+
+    alerta: function (menssage, type) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": 400,
+        "hideDuration": 400,
+        "timeOut": 4000,
+        "extendedTimeOut": 1000,
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+      toastr[type](menssage);
+    }
   },
   mounted: function () {
     this.$nextTick(function () {
