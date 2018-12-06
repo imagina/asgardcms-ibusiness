@@ -268,4 +268,27 @@ class BusinessController extends AdminBaseController
         $addressable=Addressables::create(['address_id'=>$address_id,'ibusiness__addressables_id'=>$request->business_id,"ibusiness__addressables_type"=>'Modules\Ibusiness\Entities\Business']);
       return response()->json(['success'=>1,'message'=>trans('ibusiness::businesses.messages.address_associated_branch'),'newAddress'=>$addressBilling]);
     }//setAddress
+
+    /**
+    * view import and export from ibusiness.
+    * @return View
+    */
+    public function indexImport(){
+      return view('ibusiness::admin.businesses.bulkload.index');
+    }
+    
+    public function importBusinesses(Request $request)
+    {
+      $msg="";
+      try {
+        $data_excel = Excel::import(new BusinessesImport(), $request->importfile);
+        $msg=trans('ibusiness::businesses.bulkload.success migrate');
+        return redirect()->route('admin.ibusiness.business.index')
+        ->withSuccess($msg);
+      } catch (Exception $e) {
+        $msg  =  trans('ibusiness::businesses.bulkload.error in migrate');
+        return redirect()->route('admin.ibusiness.business.index')
+        ->withError($msg);
+      }
+    }//importBusinesses()
 }

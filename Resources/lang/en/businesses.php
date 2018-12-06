@@ -128,5 +128,15 @@ return [
       'create preorders' => 'Create orders',
       'update order approver' => 'Approve orders',
       'edit preorder'=>'Edit pre-order '
-    ]
+    ],
+    'bulkload' => [
+        'import' => 'Import',
+        'title' => 'Import Businesses',
+        'Select File' => 'Select File',
+        'selectFilecompatible' => 'Select Compatible Files CSV, XLSX',
+        'Submit' => 'Submit',
+        'import' => 'Import',
+        'success migrate' => 'Success migrate',
+        'error in migrate' => 'Error in migrate',
+    ],
 ];

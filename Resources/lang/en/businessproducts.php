@@ -28,11 +28,17 @@ return [
     ],
     'messages' => [
       'product_price_update'=>'Price of the product updated.',
-      'success migrate from product' => 'success migrate from product',
+      'success migrate from product' => 'Success migrate from product',
 
     ],
     'validation' => [
       'price_product_blank' => 'The field of the price of the product can not be empty',
       'price_product_min' => 'The price of the product can not be less than 0'
+    ],
+    'bulkload' => [
+        'title' => 'Import Business Products',
+        'Select File' => 'Select File',
+        'selectFilecompatible' => 'Select Compatible Files CSV, XLSX',
+        'Import' => 'Import',
     ],
 ];

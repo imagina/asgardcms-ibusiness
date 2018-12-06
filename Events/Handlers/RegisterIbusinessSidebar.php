@@ -52,6 +52,22 @@ class RegisterIbusinessSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('ibusiness.businesses.index')
                     );
                 });
+                $item->item(trans('ibusiness::businesses.bulkload.title'), function (Item $item) {
+                  $item->icon('fa fa-upload');
+                  $item->weight(0);
+                  $item->route('admin.ibusiness.bulkload.index');
+                  $item->authorize(
+                    $this->auth->hasAccess('ibusiness.bulkload.import')
+                  );
+                });
+                $item->item(trans('ibusiness::businessproducts.bulkload.title'), function (Item $item) {
+                  $item->icon('fa fa-upload');
+                  $item->weight(0);
+                  $item->route('admin.ibusiness.bulkload.index.products');
+                  $item->authorize(
+                    $this->auth->hasAccess('ibusiness.bulkload.import')
+                  );
+                });
                 /*
                 $item->item(trans('ibusiness::userbusinesses.title.userbusinesses'), function (Item $item) {
                     $item->icon('fa fa-users');

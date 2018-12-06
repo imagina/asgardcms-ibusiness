@@ -38,6 +38,11 @@ return [
       'edit'=>'ibusiness::businesses.permissions.edit preorder'
 
     ],
+    'ibusiness.bulkload' => [
+    'import' => 'ibusiness::businesses.bulkload.import',
+    'import' => 'ibusiness::businesses.bulkload.import.products',
+    'export' => 'ibusiness::businesses.bulkload.export',
+],
 // append
 
 

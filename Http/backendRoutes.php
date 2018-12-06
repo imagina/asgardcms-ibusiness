@@ -261,6 +261,31 @@ $router->group(['prefix' =>'/ibusiness'], function (Router $router) {
         'uses' => 'AddressController@destroy',
         'middleware' => 'can:ibusiness.addresses.destroy'
     ]);
+
+    $router->group(['prefix' =>'bulkload'], function (Router $router){
+    $router->get('index',[
+        'as'=>'admin.ibusiness.bulkload.index',
+        'uses'=>'BusinessController@indeximport',
+        'middleware'=>'can:ibusiness.bulkload.import',
+    ]);
+    $router->post('import',[
+        'as'=>'admin.ibusiness.bulkload.import',
+        'uses'=>'BusinessController@importBusinesses',
+         'middleware'=>'can:ibusiness.bulkload.import',
+    ]);
+    $router->get('import_products',[
+      'as'=>'admin.ibusiness.bulkload.index.products',
+      'uses'=>'BusinessProductController@indeximport',
+      'middleware'=>'can:ibusiness.bulkload.import',
+      // 'middleware'=>'can:ibusiness.bulkload.import.products',
+    ]);
+    $router->post('import_products',[
+        'as'=>'admin.ibusiness.bulkload.import.products',
+        'uses'=>'BusinessProductController@generalImportProduct',
+         // 'middleware'=>'can:ibusiness.bulkload.import.products',
+    ]);
+
+});
 // append
 
 

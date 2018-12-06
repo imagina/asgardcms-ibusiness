@@ -100,27 +100,46 @@ class BusinessProductController extends AdminBaseController
             ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('ibusiness::businessproducts.title.businessproducts')]));
     }
 
-    public function importProduct(Request $request,$id){
-      $businessproducts = $this->businessproduct->all();
-      //$id = business_id
-      //$request->importfile == excel file
-      // dd($request->all());
-      $data_excel = Excel::Load($request->importfile, function ($reader) {
-          $excel = $reader->all();
-          return $excel;
-      });
-      $data_excel=$data_excel->parsed;
-      // dd($data_excel);
-      BulkloadProductPrice::dispatch(json_decode($data_excel),$id,$this->business);
-      // foreach (json_decode($data_excel) as $i){
-      //   dd($i);
-      //   echo $i->price;
-      //   //$i->price
-      //   //$i->product_id
-      // }
-      return redirect()->back()->withSuccess(trans('ibusiness::businessproducts.messages.success migrate from product'));
-      // return redirect()->route('admin.ibusiness.businessproduct.importproduct');
+    // Import general products and business
+    public function indexImport(){
+      return view('ibusiness::admin.businesses.bulkload.indexProducts');
     }
+
+    // Import general products and business
+    public function generalImportProduct(Request $request){
+      try {
+          $data_excel = Excel::import(new BusinessProductImport(), $request->importfile);
+          return redirect()->back()->withSuccess(trans('ibusiness::businessproducts.messages.success migrate from product'));
+      } catch (Exception $e) {
+          $msg  =  trans('ibusiness::businesses.bulkload.error in migrate');
+          return redirect()->route('admin.ibusiness.business.index')
+          ->withError($msg);
+      }
+    }//importProduct($request,$id)
+
+    //Import product to one business
+    public function importProduct(Request $request,$id){
+      try {
+          if(!$this->business->find($id))
+            throw new Exception('Business with id: '.$id.' not exist');
+          $data_excel = Excel::import(new RelationProductsOfBusinessImport($id), $request->importfile);
+          return redirect()->back()->withSuccess(trans('ibusiness::businessproducts.messages.success migrate from product'));
+      } catch (Exception $e) {
+          $msg  =  trans('ibusiness::businesses.bulkload.error in migrate');
+          return redirect()->route('admin.ibusiness.business.index')
+          ->withError($msg);
+      }
+    }
+    // public function importProduct(Request $request,$id){
+    //   $businessproducts = $this->businessproduct->all();
+    //   $data_excel = Excel::Load($request->importfile, function ($reader) {
+    //       $excel = $reader->all();
+    //       return $excel;
+    //   });
+    //   $data_excel=$data_excel->parsed;
+    //   BulkloadProductPrice::dispatch(json_decode($data_excel),$id,$this->business);
+    //   return redirect()->back()->withSuccess(trans('ibusiness::businessproducts.messages.success migrate from product'));
+    // }
 
     public function importProductTrapeq(Request $request){
       dd('asddad',$request->all());

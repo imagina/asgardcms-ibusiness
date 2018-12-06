@@ -29,13 +29,17 @@ return [
     ],
     'messages' => [
       'product_price_update'=>'Precio del producto actualizado.',
-      'success migrate from product' => 'Productos migrados con éxito, la actualización se realiza en unos instantes',
+      'success migrate from product' => 'Productos migrados con éxito',
 
     ],
     'validation' => [
       'price_product_blank' => 'El campo del precio del producto no puede estar vacío',
       'price_product_min' => 'El precio del producto no puede ser menor a 0'
-
-
+    ],
+    'bulkload' => [
+        'title' => 'Importar Productos de Empresa',
+        'Select File' => 'Seleccionar Archivo',
+        'selectFilecompatible' => 'Selecciona un archivo con extensión compatiable CSV, XLSX',
+        'Import' => 'Importar',
     ],
 ];
