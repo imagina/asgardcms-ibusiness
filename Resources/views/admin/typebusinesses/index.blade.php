@@ -2,11 +2,11 @@
 
 @section('content-header')
     <h1>
-        {{ trans('ibusiness::businesses.title.businesses') }}
+        {{ trans('ibusiness::typebusinesses.title.typebusinesses') }}
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li class="active">{{ trans('ibusiness::businesses.title.businesses') }}</li>
+        <li class="active">{{ trans('ibusiness::typebusinesses.title.typebusinesses') }}</li>
     </ol>
 @stop
 
@@ -15,8 +15,8 @@
         <div class="col-xs-12">
             <div class="row">
                 <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
-                    <a href="{{ route('admin.ibusiness.business.create') }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
-                        <i class="fa fa-pencil"></i> {{ trans('ibusiness::businesses.button.create business') }}
+                    <a href="{{ route('admin.ibusiness.typebusiness.create') }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
+                        <i class="fa fa-pencil"></i> {{ trans('ibusiness::typebusinesses.button.create typebusiness') }}
                     </a>
                 </div>
             </div>
@@ -34,18 +34,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php if (isset($businesses)): ?>
-                            <?php foreach ($businesses as $business): ?>
+                            <?php if (isset($typebusinesses)): ?>
+                            <?php foreach ($typebusinesses as $typebusiness): ?>
                             <tr>
                                 <td>
-                                    <a href="{{ route('admin.ibusiness.business.edit', [$business->id]) }}">
-                                        {{ $business->created_at }}
+                                    <a href="{{ route('admin.ibusiness.typebusiness.edit', [$typebusiness->id]) }}">
+                                        {{ $typebusiness->created_at }}
                                     </a>
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.ibusiness.business.edit', [$business->id]) }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.ibusiness.business.destroy', [$business->id]) }}"><i class="fa fa-trash"></i></button>
+                                        <a href="{{ route('admin.ibusiness.typebusiness.edit', [$typebusiness->id]) }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
+                                        <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.ibusiness.typebusiness.destroy', [$typebusiness->id]) }}"><i class="fa fa-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -75,7 +75,7 @@
 @section('shortcuts')
     <dl class="dl-horizontal">
         <dt><code>c</code></dt>
-        <dd>{{ trans('ibusiness::businesses.title.create business') }}</dd>
+        <dd>{{ trans('ibusiness::typebusinesses.title.create typebusiness') }}</dd>
     </dl>
 @stop
 
@@ -84,7 +84,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'c', route: "<?= route('admin.ibusiness.business.create') ?>" }
+                    { key: 'c', route: "<?= route('admin.ibusiness.typebusiness.create') ?>" }
                 ]
             });
         });

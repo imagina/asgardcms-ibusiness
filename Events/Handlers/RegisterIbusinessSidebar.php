@@ -106,7 +106,37 @@ class RegisterIbusinessSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                     );
                 });
                 */
+                $item->item(trans('ibusiness::businesses.title.businesses'), function (Item $item) {
+                    $item->icon('fa fa-copy');
+                    $item->weight(0);
+                    $item->append('admin.ibusiness.business.create');
+                    $item->route('admin.ibusiness.business.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('ibusiness.businesses.index')
+                    );
+                });
+                $item->item(trans('ibusiness::typebusinesses.title.typebusinesses'), function (Item $item) {
+                    $item->icon('fa fa-copy');
+                    $item->weight(0);
+                    $item->append('admin.ibusiness.typebusiness.create');
+                    $item->route('admin.ibusiness.typebusiness.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('ibusiness.typebusinesses.index')
+                    );
+                });
+                $item->item(trans('ibusiness::types.title.types'), function (Item $item) {
+                    $item->icon('fa fa-copy');
+                    $item->weight(0);
+                    $item->append('admin.ibusiness.type.create');
+                    $item->route('admin.ibusiness.type.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('ibusiness.types.index')
+                    );
+                });
 // append
+
+
+
 
 
 

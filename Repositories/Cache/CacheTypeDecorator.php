@@ -2,16 +2,16 @@
 
 namespace Modules\Ibusiness\Repositories\Cache;
 
-use Modules\Ibusiness\Repositories\BusinessRepository;
+use Modules\Ibusiness\Repositories\TypeRepository;
 use Modules\Core\Repositories\Cache\BaseCacheDecorator;
 
-class CacheBusinessDecorator extends BaseCacheDecorator implements BusinessRepository
+class CacheTypeDecorator extends BaseCacheDecorator implements TypeRepository
 {
-  public function __construct(BusinessRepository $business)
+  public function __construct(TypeRepository $type)
   {
     parent::__construct();
-    $this->entityName = 'ibusiness.businesses';
-    $this->repository = $business;
+    $this->entityName = 'ibusiness.types';
+    $this->repository = $type;
   }
 
   /**

@@ -4,7 +4,7 @@ namespace Modules\Ibusiness\Http\Requests;
 
 use Modules\Core\Internationalisation\BaseFormRequest;
 
-class UpdateBusinessRequest extends BaseFormRequest
+class CreateTypeRequest extends BaseFormRequest
 {
     public function rules()
     {
